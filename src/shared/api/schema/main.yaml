@@ -23,3 +23,17 @@ paths:
   /auth/refresh:
     post:
       $ref: "./endpoints/auth.yaml#/refresh"
+
+  /cards:
+    get:
+      $ref: "./endpoints/card.yaml#/getAllCards"
+    post:
+      $ref: "./endpoints/card.yaml#/createCard"
+
+  /cards/{cardId}:
+    get:
+      $ref: "./endpoints/card.yaml#/getCardById"
+    put:
+      $ref: "./endpoints/card.yaml#/renameCard"
+    delete:
+      $ref: "./endpoints/card.yaml#/deleteCard"

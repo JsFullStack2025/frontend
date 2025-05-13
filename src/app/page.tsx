@@ -1,6 +1,9 @@
-import { CONFIG } from "@/shared/model/config"
+import { CardsList } from "@/features/cards"
 
-export default function Home() {
-	"use client"
-	return "Home Page " + CONFIG.API_BASE_URL
+export default function CardsPage() {
+	return (
+		<main className="bg-background min-h-screen">
+			<CardsList />
+		</main>
+	)
 }

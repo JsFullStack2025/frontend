@@ -1,0 +1,162 @@
+schemas:
+  Card:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+
+  RenameCard:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+
+  CardsList:
+    type: object
+    required:
+      - list
+      - total
+      - totalPages
+    properties:
+      list:
+        type: array
+        items:
+          $ref: "#/schemas/Card"
+      total:
+        type: integer
+      totalPages:
+        type: integer
+
+getAllCards:
+  summary: Получить все карточки
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1
+    - name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+    - name: sort
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - createdAt
+          - updatedAt
+          - name
+    - name: search
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Список карточек
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/CardsList"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+getCardById:
+  summary: Получить карточку по id
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Карточка
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Card"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
+
+createCard:
+  summary: Создать новую карточку
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/RenameCard"
+  responses:
+    "201":
+      description: Карточка успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Card"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+renameCard:
+  summary: Переименовать карточку
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/RenameCard"
+  responses:
+    "200":
+      description: Карточка успешно переименована
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Card"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+deleteCard:
+  summary: Удалить карточку
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "204":
+      description: Карточка успешно удалена
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
