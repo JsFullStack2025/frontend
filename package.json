@@ -1,45 +1,51 @@
 {
-	"name": "frontend",
-	"version": "0.1.0",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "next dev --turbopack",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"api": "npx openapi-typescript ./src/shared/api/schema/main.yaml -o ./src/shared/api/schema/generated.ts"
-	},
-	"dependencies": {
-		"@tanstack/react-query": "^5.76.0",
-		"class-variance-authority": "^0.7.1",
-		"clsx": "^2.1.1",
-		"lucide-react": "^0.510.0",
-		"next": "15.3.2",
-		"openapi-fetch": "^0.14.0",
-		"openapi-react-query": "^0.5.0",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
-		"tailwind-merge": "^3.3.0"
-	},
-	"devDependencies": {
-		"@eslint/eslintrc": "^3",
-		"@tailwindcss/postcss": "^4",
-		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
-		"@types/node": "^20",
-		"@types/react": "^19",
-		"@types/react-dom": "^19",
-		"eslint": "^9",
-		"eslint-config-next": "15.3.2",
-		"eslint-import-resolver-typescript": "^4.3.4",
-		"eslint-plugin-boundaries": "^5.0.1",
-		"msw": "^2.8.2",
-		"openapi-msw": "^1.2.0",
-		"openapi-typescript": "^7.8.0",
-		"prettier": "^3.5.3",
-		"prettier-plugin-tailwindcss": "^0.6.11",
-		"tailwindcss": "^4",
-		"tw-animate-css": "^1.2.9",
-		"typescript": "^5"
-	}
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "api": "npx openapi-typescript ./src/shared/api/schema/main.yaml -o ./src/shared/api/schema/generated.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.76.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "jose": "^6.0.11",
+    "lucide-react": "^0.510.0",
+    "next": "15.3.2",
+    "openapi-fetch": "^0.14.0",
+    "openapi-react-query": "^0.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "eslint-import-resolver-typescript": "^4.3.4",
+    "eslint-plugin-boundaries": "^5.0.1",
+    "msw": "^2.8.2",
+    "openapi-msw": "^1.2.0",
+    "openapi-typescript": "^7.8.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.2.9",
+    "typescript": "^5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }
