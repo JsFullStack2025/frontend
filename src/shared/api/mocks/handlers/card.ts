@@ -1,4 +1,4 @@
-import { HttpResponse, delay } from "msw"
+import { HttpResponse } from "msw"
 
 import { ApiSchemas } from "../../schema"
 import { http } from "../http"
@@ -140,7 +140,6 @@ export const cardHandlers = [
 	http.delete("/cards/{cardId}", async ({ params }) => {
 		const { cardId } = params
 		const index = cards.findIndex((card) => card.id === cardId)
-		await delay(1000)
 
 		if (index === -1) {
 			return HttpResponse.json(

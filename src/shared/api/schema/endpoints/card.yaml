@@ -101,12 +101,6 @@ createCard:
   summary: Создать новую карточку
   security:
     - bearerAuth: []
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: "#/schemas/RenameCard"
   responses:
     "201":
       description: Карточка успешно создана
