@@ -37,3 +37,21 @@ paths:
       $ref: "./endpoints/card.yaml#/renameCard"
     delete:
       $ref: "./endpoints/card.yaml#/deleteCard"
+
+  /cards/{cardId}/content:
+    get:
+      $ref: "./endpoints/card-editor.yaml#/getCardContent"
+    put:
+      $ref: "./endpoints/card-editor.yaml#/updateCardContent"
+
+  /cards/{cardId}/drafts:
+    get:
+      $ref: "./endpoints/card-editor.yaml#/getDrafts"
+    post:
+      $ref: "./endpoints/card-editor.yaml#/saveDraft"
+
+  /cards/{cardId}/drafts/{draftId}:
+    get:
+      $ref: "./endpoints/card-editor.yaml#/getDraftById"
+    delete:
+      $ref: "./endpoints/card-editor.yaml#/deleteDraft"

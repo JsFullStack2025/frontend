@@ -1,4 +1,37 @@
 schemas:
+  VCardData:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      organization:
+        type: string
+      title:
+        type: string
+      phoneWork:
+        type: string
+      phoneMobile:
+        type: string
+      email:
+        type: string
+      website:
+        type: string
+      addressStreet:
+        type: string
+      addressCity:
+        type: string
+      addressRegion:
+        type: string
+      addressPostalCode:
+        type: string
+      addressCountry:
+        type: string
+      note:
+        type: string
+    description: "VCard information"
+
   Card:
     type: object
     required:
@@ -9,6 +42,32 @@ schemas:
         type: string
       name:
         type: string
+      content:
+        type: string
+        description: "Markdown content"
+      style:
+        type: object
+        properties:
+          theme:
+            type: string
+            enum: [light, dark, colorful]
+            default: light
+          layout:
+            type: string
+            enum: [default, compact, wide]
+            default: default
+          customCss:
+            type: string
+            description: "Special CSS"
+      vcard:
+        $ref: "#/schemas/VCardData"
+        nullable: true
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
 
   RenameCard:
     type: object
