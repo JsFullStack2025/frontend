@@ -277,6 +277,204 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cards/{cardId}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Kart içeriğini getir */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Kart içeriği */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CardContent"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        /** Kart içeriğini güncelle */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CardUpdate"];
+                };
+            };
+            responses: {
+                /** @description Kart içeriği başarıyla güncellendi */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CardContent"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cards/{cardId}/drafts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Kart taslakları listesi */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Taslak listesi */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DraftsList"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        put?: never;
+        /** Taslak olarak kaydet */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CardContent"];
+                };
+            };
+            responses: {
+                /** @description Taslak başarıyla kaydedildi */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CardDraft"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cards/{cardId}/drafts/{draftId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Taslak detayı */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                    draftId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Taslak detayı */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CardDraft"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        /** Taslağı sil */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cardId: string;
+                    draftId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Taslak başarıyla silindi */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -306,9 +504,47 @@ export interface components {
             /** Format: password */
             password: string;
         };
+        /** @description VCard information */
+        VCardData: {
+            firstName?: string;
+            lastName?: string;
+            organization?: string;
+            title?: string;
+            phoneWork?: string;
+            phoneMobile?: string;
+            email?: string;
+            website?: string;
+            addressStreet?: string;
+            addressCity?: string;
+            addressRegion?: string;
+            addressPostalCode?: string;
+            addressCountry?: string;
+            note?: string;
+        };
         Card: {
             id: string;
             name: string;
+            /** @description Markdown content */
+            content?: string;
+            style?: {
+                /**
+                 * @default light
+                 * @enum {string}
+                 */
+                theme: "light" | "dark" | "colorful";
+                /**
+                 * @default default
+                 * @enum {string}
+                 */
+                layout: "default" | "compact" | "wide";
+                /** @description Special CSS */
+                customCss?: string;
+            };
+            vcard?: components["schemas"]["VCardData"];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
         };
         CardsList: {
             list: components["schemas"]["Card"][];
@@ -317,6 +553,58 @@ export interface components {
         };
         RenameCard: {
             name: string;
+        };
+        CardContent: {
+            /** @description Markdown formatında kart içeriği */
+            content: string;
+            style?: {
+                /**
+                 * @default light
+                 * @enum {string}
+                 */
+                theme: "light" | "dark" | "colorful";
+                /**
+                 * @default default
+                 * @enum {string}
+                 */
+                layout: "default" | "compact" | "wide";
+                /** @description Özel CSS stilleri */
+                customCss?: string;
+            };
+        };
+        style: {
+            /**
+             * @default light
+             * @enum {string}
+             */
+            theme: "light" | "dark" | "colorful";
+            /**
+             * @default default
+             * @enum {string}
+             */
+            layout: "default" | "compact" | "wide";
+            /** @description Özel CSS stilleri */
+            customCss?: string;
+        };
+        CardUpdate: {
+            name?: string;
+            content?: string;
+            style?: components["schemas"]["style"];
+            vcard?: components["schemas"]["VCardData"];
+        };
+        CardDraft: {
+            id: string;
+            cardId: string;
+            content: string;
+            style?: components["schemas"]["style"];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        DraftsList: {
+            list: components["schemas"]["CardDraft"][];
+            total: number;
         };
     };
     responses: {

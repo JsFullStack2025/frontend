@@ -1,18 +1,17 @@
 "use client"
 
-import { useQueryClient } from "@tanstack/react-query"
-import { Plus, Trash2 } from "lucide-react"
+import { Plus, Trash2, Edit, File } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
+import Link from "next/link"
 
-import { rqClient } from "@/shared/api/instance"
 import { Button } from "@/shared/ui/button"
-import { Card } from "@/shared/ui/card"
+import { Card, CardContent, CardFooter } from "@/shared/ui/card"
 import { Input } from "@/shared/ui/input"
-
+import { queryClient } from "@/shared/api/query-client"
+import { rqClient } from "@/shared/api/instance"
 export function CardsList() {
 	const [newCardName, setNewCardName] = useState("")
-	const queryClient = useQueryClient()
 
 	const { data, isLoading } = rqClient.useQuery("get", "/cards")
 
@@ -42,7 +41,14 @@ export function CardsList() {
 			toast.error("Введите название карточки")
 			return
 		}
-		createCardMutation.mutate({ body: { name: newCardName } })
+		createCardMutation.mutate({ 
+			name: newCardName,
+			content: "# Новая карточка\n\nЗдесь вы можете написать содержимое.",
+			style: {
+				theme: "light",
+				layout: "default"
+			}
+		})
 	}
 
 	const handleDeleteCard = (cardId: string) => {
@@ -82,18 +88,34 @@ export function CardsList() {
 
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{data?.list.map((card) => (
-					<Card key={card.id} className="p-4">
-						<div className="flex items-start justify-between">
-							<h3 className="text-lg font-medium">{card.name}</h3>
-							<Button
-								variant="ghost"
-								size="icon"
-								onClick={() => handleDeleteCard(card.id)}
-								disabled={deleteCardMutation.isPending}
-							>
-								<Trash2 className="h-4 w-4 text-red-500" />
+					<Card key={card.id} className="flex flex-col">
+						<CardContent className="pt-6">
+							<div className="flex items-start justify-between">
+								<h3 className="text-lg font-medium">{card.name}</h3>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => handleDeleteCard(card.id)}
+									disabled={deleteCardMutation.isPending}
+								>
+									<Trash2 className="h-4 w-4 text-red-500" />
+								</Button>
+							</div>
+						</CardContent>
+						<CardFooter className="flex justify-end gap-2 pt-2">
+							<Button variant="outline" size="sm" asChild>
+								<Link href={`/cards/${card.id}/view`}>
+									<File className="mr-2 h-4 w-4" />
+									Просмотр
+								</Link>
 							</Button>
-						</div>
+							<Button variant="outline" size="sm" asChild>
+								<Link href={`/cards/${card.id}/edit`}>
+									<Edit className="mr-2 h-4 w-4" />
+									Редактировать
+								</Link>
+							</Button>
+						</CardFooter>
 					</Card>
 				))}
 			</div>

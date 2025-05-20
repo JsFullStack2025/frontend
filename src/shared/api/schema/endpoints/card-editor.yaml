@@ -1,0 +1,217 @@
+schemas:
+  CardContent:
+    type: object
+    required:
+      - content
+    properties:
+      content:
+        type: string
+        description: "Markdown content"
+      style:
+        type: object
+        properties:
+          theme:
+            type: string
+            enum: [light, dark, colorful]
+            default: light
+          layout:
+            type: string
+            enum: [default, compact, wide]
+            default: default
+          customCss:
+            type: string
+            description: "Custom CSS styles"
+
+  CardUpdate:
+    type: object
+    properties:
+      name:
+        type: string
+      content:
+        type: string
+      style:
+        $ref: "#/schemas/CardContent/properties/style"
+      vcard:
+        $ref: "../endpoints/card.yaml#/schemas/VCardData"
+        nullable: true
+      
+  CardDraft:
+    type: object
+    required:
+      - id
+      - cardId
+      - content
+    properties:
+      id:
+        type: string
+      cardId:
+        type: string
+      content:
+        type: string
+      style:
+        $ref: "#/schemas/CardContent/properties/style"
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+  DraftsList:
+    type: object
+    required:
+      - list
+      - total
+    properties:
+      list:
+        type: array
+        items:
+          $ref: "#/schemas/CardDraft"
+      total:
+        type: integer
+
+getCardContent:
+  summary: Get card content
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Card content
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/CardContent"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
+
+updateCardContent:
+  summary: Update card content
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/CardUpdate"
+  responses:
+    "200":
+      description: Card content updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/CardContent"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
+
+saveDraft:
+  summary: Save as draft
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/CardContent"
+  responses:
+    "201":
+      description: Draft saved successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/CardDraft"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+getDrafts:
+  summary: Card drafts list
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Draft list
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/DraftsList"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+getDraftById:
+  summary: Draft details
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: draftId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Draft details
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/CardDraft"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
+
+deleteDraft:
+  summary: Delete draft
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: cardId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: draftId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "204":
+      description: Draft deleted successfully
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError" 
