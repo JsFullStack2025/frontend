@@ -289,8 +289,10 @@ export interface components {
         };
         User: {
             id: string;
+            username: string;
             /** Format: email */
             email: string;
+            isAdmin: boolean;
         };
         AuthResponse: {
             accessToken: string;

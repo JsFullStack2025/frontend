@@ -3,14 +3,19 @@ schemas:
     type: object
     required:
       - id
+      - username
       - email
+      - isAdmin
     properties:
       id:
+        type: string
+      username:
         type: string
       email:
         type: string
         format: email
-
+      isAdmin: 
+        type: boolean
   LoginRequest:
     type: object
     required:
