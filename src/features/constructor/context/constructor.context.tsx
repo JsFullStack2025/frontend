@@ -8,7 +8,12 @@ const ConstructorContext = createContext<ConstructorContextType>({
 	selectedItem: null,
 	addItem: () => {},
 	removeItem: () => {},
-	selectItem: () => {}
+	selectItem: () => {},
+	editItem: () => {},
+	selectedType: null,
+	selectType: () => {},
+	parent: null,
+	setParent: () => {}
 })
 
 export const useConstructor = () => {
@@ -26,6 +31,8 @@ export function ConstructorProvider({
 }) {
 	const [items, setItems] = useState<ConstructorItem[]>([])
 	const [selected, setSelected] = useState<string | null>(null)
+	const [parent, setParent] = useState<string | null>(null)
+	const [selectedType, setSelectedType] = useState<string | null>(null)
 
 	const addItem = (item: ConstructorItem) => {
 		setItems((prev) => [...prev, item])
@@ -39,9 +46,34 @@ export function ConstructorProvider({
 		setSelected(id)
 	}
 
+	const editItem = (id: string, data: any) => {
+		setItems((prev) =>
+			prev.map((item) => (item.id === id ? { ...item, data } : item))
+		)
+	}
+
+	const selectType = (type: string | null) => {
+		setSelectedType(type)
+	}
+
+	const selectParent = (id: string | null) => {
+		setParent(id)
+	}
+
 	return (
 		<ConstructorContext.Provider
-			value={{ items, selectedItem: selected, addItem, removeItem, selectItem }}
+			value={{
+				items,
+				selectedItem: selected,
+				addItem,
+				removeItem,
+				selectItem,
+				editItem,
+				selectedType,
+				selectType,
+				parent,
+				setParent: selectParent
+			}}
 		>
 			{children}
 		</ConstructorContext.Provider>
