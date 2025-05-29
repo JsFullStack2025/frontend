@@ -8,7 +8,9 @@ import { queryClient } from "@/shared/api/query-client"
 
 function MockProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
-		enableMocking()
+		enableMocking().then(() => {
+			queryClient.invalidateQueries()
+		})
 	}, [])
 
 	return <>{children}</>

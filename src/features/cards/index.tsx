@@ -81,7 +81,7 @@ export function CardsList() {
 			</div>
 
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{data?.list.map((card) => (
+				{data?.list?.map((card) => (
 					<Card key={card.id} className="p-4">
 						<div className="flex items-start justify-between">
 							<h3 className="text-lg font-medium">{card.name}</h3>
@@ -98,7 +98,7 @@ export function CardsList() {
 				))}
 			</div>
 
-			{data?.list.length === 0 && (
+			{(!data?.list || data.list.length === 0) && (
 				<div className="py-8 text-center text-gray-500">
 					Карточки не найдены
 				</div>
