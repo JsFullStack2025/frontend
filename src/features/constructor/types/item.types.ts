@@ -9,6 +9,6 @@ export type ConstructorItem<T = any> = {
 
 export type RegisteredItemType<T = any> = {
 	id: string
-	renderer: (item: ConstructorItem<T>) => ReactNode
+	renderer: (item: ConstructorItem<T>, devMode?: boolean) => ReactNode
 	defaultData: T
 }
