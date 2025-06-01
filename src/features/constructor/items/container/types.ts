@@ -1,3 +1,3 @@
 export type ContainerItemData = {
-	columns: number
+	direction: "row" | "col"
 }

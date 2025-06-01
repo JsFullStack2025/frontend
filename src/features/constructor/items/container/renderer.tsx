@@ -1,3 +1,5 @@
+"use client"
+
 import cuid from "cuid"
 import React, { useCallback } from "react"
 
@@ -60,17 +62,25 @@ export function ContainerItemRenderer({ item, devMode }: Props) {
 		[selectedType]
 	)
 
+	const select = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation()
+		if (devMode) selectItem(item.id)
+	}
+
 	return (
 		<div
 			className={cn(
-				"flex min-h-16 w-full flex-1 gap-2 border-2 border-dashed border-gray-300 p-1",
+				"flex min-h-16 w-full flex-1",
+				`flex-${item.data.direction}`,
 				{
+					"gap-2 border-2 border-dashed border-gray-300 p-1": devMode,
 					"p-4": isDragging
 				}
 			)}
 			onDragOver={onDragOver}
 			onDragLeave={onDragLeave}
 			onDrop={onDrop}
+			onClick={select}
 		>
 			{items
 				.filter((it) => it.parent === item.id)

@@ -1,11 +1,13 @@
-import { RegisteredItemType } from "../../types/item.types"
-import { ConstructorItem } from "../../types/item.types"
+import { ConstructorItem, RegisteredItemType } from "../../types/item.types"
 
 import { PictureItemRenderer } from "./renderer"
 import { PictureItemData } from "./types"
 
 export const PictureItem: RegisteredItemType<PictureItemData> = {
 	id: "picture",
-	renderer: (item: ConstructorItem) => <PictureItemRenderer item={item} />,
+	renderer: (item: ConstructorItem, devMode?: boolean) => (
+		<PictureItemRenderer item={item} devMode={devMode} />
+	),
+	propertiesForm: (item: ConstructorItem) => undefined,
 	defaultData: { src: "" }
 }

@@ -1,10 +1,16 @@
 import { ConstructorItem, RegisteredItemType } from "../../types/item.types"
 
+import { ContainerItemPropsForm } from "./props/form"
 import { ContainerItemRenderer } from "./renderer"
 import { ContainerItemData } from "./types"
 
 export const ContainerItem: RegisteredItemType<ContainerItemData> = {
 	id: "container",
-	renderer: (item: ConstructorItem) => <ContainerItemRenderer item={item} />,
-	defaultData: { columns: 2 }
+	renderer: (item: ConstructorItem, devMode?: boolean) => (
+		<ContainerItemRenderer item={item} devMode={devMode} />
+	),
+	propertiesForm: (item: ConstructorItem) => (
+		<ContainerItemPropsForm item={item} />
+	),
+	defaultData: { direction: "row" }
 }

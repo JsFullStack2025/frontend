@@ -9,6 +9,7 @@ import { PlusBlock } from "@/shared/ui/plus-block"
 import { itemManager } from "./config/item.config"
 import { useConstructor } from "./context/constructor.context"
 import { ItemList } from "./item-list"
+import { ItemProperties } from "./item-properties"
 
 export function Canvas() {
 	const [isDragging, setIsDragging] = React.useState(false)
@@ -77,6 +78,7 @@ export function Canvas() {
 					))}
 				{isDragging && <PlusBlock />}
 			</div>
+			<ItemProperties />
 		</div>
 	)
 }
