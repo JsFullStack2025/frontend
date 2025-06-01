@@ -18,7 +18,9 @@ type Props = {
 }
 
 export function ContainerItemRenderer({ item, devMode }: Props) {
-	const { items, addItem, selectedType, selectItem } = useConstructor()
+	const { items, addItem, selectedType, selectItem, selectedItem } =
+		useConstructor()
+	const isSelect = selectedItem === item.id
 	const [isDragging, setIsDragging] = React.useState(false)
 
 	const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -74,7 +76,8 @@ export function ContainerItemRenderer({ item, devMode }: Props) {
 				`flex-${item.data.direction}`,
 				{
 					"gap-2 border-2 border-dashed border-gray-300 p-1": devMode,
-					"p-4": isDragging
+					"p-4": isDragging,
+					"border-4 border-blue-300": isSelect && devMode
 				}
 			)}
 			onDragOver={onDragOver}

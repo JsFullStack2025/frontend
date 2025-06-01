@@ -13,5 +13,5 @@ export function ItemProperties() {
 
 	if (!propsForm) return "У элемента нет параметров"
 
-	return <div>{propsForm}</div>
+	return <div className="min-w-64">{propsForm}</div>
 }

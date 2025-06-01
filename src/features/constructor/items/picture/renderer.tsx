@@ -1,5 +1,7 @@
 import { Image } from "lucide-react"
 
+import { cn } from "@/shared/lib/utils"
+
 import { useConstructor } from "../../context/constructor.context"
 import { ConstructorItem } from "../../types/item.types"
 
@@ -11,23 +13,23 @@ type Props = {
 }
 
 export function PictureItemRenderer({ item, devMode }: Props) {
-	const { selectItem } = useConstructor()
+	const { selectItem, selectedItem } = useConstructor()
+	const isSelect = selectedItem === item.id
 
 	const select = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation()
 		if (devMode) selectItem(item.id)
 	}
 
-	return !!item.data.src ? (
-		<div onClick={select} className="flex-1 bg-gray-200">
-			{item.data.src}
-		</div>
-	) : (
+	return (
 		<div
 			onClick={select}
-			className="flex flex-1 items-center justify-center bg-gray-200"
+			className={cn("flex-1", {
+				"flex items-center justify-center bg-gray-200": !item.data.src,
+				"border-4 border-blue-300": isSelect && devMode
+			})}
 		>
-			<Image className="size-8" />
+			{!!item.data.src ? item.data.src : <Image className="size-8" />}
 		</div>
 	)
 }
