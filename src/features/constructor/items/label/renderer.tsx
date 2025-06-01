@@ -24,7 +24,7 @@ export function LabelItemRenderer({ item, devMode }: Props) {
 		<p
 			onClick={select}
 			style={{ fontSize: item.data.fontSize }}
-			className={cn("h-fit min-w-8", {
+			className={cn("h-fit min-w-8 whitespace-pre-line", {
 				"bg-blue-300": isSelect && devMode,
 				"font-bold": item.data.bold,
 				italic: item.data.italic,

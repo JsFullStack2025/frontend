@@ -1,3 +1,5 @@
+import { LetterText } from "lucide-react"
+
 import { ConstructorItem, RegisteredItemType } from "../../types/item.types"
 
 import { LabelItemPropsForm } from "./props/form"
@@ -6,6 +8,7 @@ import { LabelItemData } from "./types"
 
 export const LabelItem: RegisteredItemType<LabelItemData> = {
 	id: "label",
+	icon: LetterText,
 	renderer: (item: ConstructorItem, devMode?: boolean) => (
 		<LabelItemRenderer
 			item={item}

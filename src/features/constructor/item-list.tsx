@@ -19,11 +19,11 @@ export function ItemList() {
 			{itemManager.registeredItemTypes.map((item) => (
 				<div
 					key={item.id}
-					className="flex size-16 items-center justify-center bg-red-500 select-none"
+					className="flex size-16 items-center justify-center bg-gray-300 select-none"
 					onDragStart={(event) => onDragStart(event, item.id)}
 					draggable
 				>
-					Block {item.id}
+					{!!item.icon ? <item.icon className="size-4" /> : item.id}
 				</div>
 			))}
 		</div>
