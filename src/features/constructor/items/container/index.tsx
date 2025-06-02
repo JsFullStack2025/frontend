@@ -18,5 +18,5 @@ export const ContainerItem: RegisteredItemType<ContainerItemData> = {
 	propertiesForm: (item: ConstructorItem) => (
 		<ContainerItemPropsForm item={item} />
 	),
-	defaultData: { direction: "row" }
+	defaultData: { direction: "row", padding: 0, margin: 0, gap: 0 }
 }

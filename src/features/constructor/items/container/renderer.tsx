@@ -71,15 +71,15 @@ export function ContainerItemRenderer({ item, devMode }: Props) {
 
 	return (
 		<div
-			className={cn(
-				"flex min-h-fit w-full flex-1",
-				`flex-${item.data.direction}`,
-				{
-					"gap-2 border-2 border-dashed border-gray-300 p-1": devMode,
-					"p-4": isDragging,
-					"border-4 border-blue-300": isSelect && devMode
-				}
-			)}
+			className={cn("flex h-fit w-full flex-1", `flex-${item.data.direction}`, {
+				"min-h-8 border-2 border-dashed border-gray-300 p-1": devMode,
+				"p-4": isDragging,
+				"border-4 border-blue-300": isSelect && devMode
+			})}
+			style={{
+				padding: item.data.padding,
+				gap: item.data.gap
+			}}
 			onDragOver={onDragOver}
 			onDragLeave={onDragLeave}
 			onDrop={onDrop}

@@ -24,7 +24,7 @@ export function PictureItemRenderer({ item, devMode }: Props) {
 	return (
 		<div
 			onClick={select}
-			className={cn("flex-1", {
+			className={cn("aspect-square flex-1", {
 				"flex items-center justify-center bg-gray-200": !item.data.src,
 				"border-4 border-blue-300": isSelect && devMode
 			})}
