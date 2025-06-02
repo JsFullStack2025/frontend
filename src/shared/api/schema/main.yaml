@@ -12,25 +12,25 @@ components:
       bearerFormat: JWT
 
 paths:
-  /auth/login:
+  /api/auth/login:
     post:
       $ref: "./endpoints/auth.yaml#/login"
 
-  /auth/register:
+  /api/auth/register:
     post:
       $ref: "./endpoints/auth.yaml#/register"
 
-  /auth/refresh:
+  /api/auth/refresh:
     post:
       $ref: "./endpoints/auth.yaml#/refresh"
 
-  /cards:
+  /api/cards:
     get:
       $ref: "./endpoints/card.yaml#/getAllCards"
     post:
       $ref: "./endpoints/card.yaml#/createCard"
 
-  /cards/{cardId}:
+  /api/cards/{cardId}:
     get:
       $ref: "./endpoints/card.yaml#/getCardById"
     put:

@@ -56,7 +56,7 @@ function generateRandomCards(count: number): ApiSchemas["Card"][] {
 const cards: ApiSchemas["Card"][] = generateRandomCards(10)
 
 export const cardHandlers = [
-	http.get("/cards", async (ctx) => {
+	http.get("/api/cards", async (ctx) => {
 		const url = new URL(ctx.request.url)
 		const page = Number(url.searchParams.get("page") || 1)
 		const limit = Number(url.searchParams.get("limit") || 10)
@@ -95,7 +95,7 @@ export const cardHandlers = [
 		})
 	}),
 
-	http.get("/cards/{cardId}", async ({ params }) => {
+	http.get("/api/cards/{cardId}", async ({ params }) => {
 		const { cardId } = params
 		const card = cards.find((card) => card.id === cardId)
 
@@ -109,7 +109,7 @@ export const cardHandlers = [
 		return HttpResponse.json(card)
 	}),
 
-	http.post("/cards", async ({ request }) => {
+	http.post("/api/cards", async ({ request }) => {
 		const data = (await request.json()) as ApiSchemas["RenameCard"]
 		const card: ApiSchemas["Card"] = {
 			id: crypto.randomUUID(),
@@ -120,7 +120,7 @@ export const cardHandlers = [
 		return HttpResponse.json(card, { status: 201 })
 	}),
 
-	http.put("/cards/{cardId}", async ({ params, request }) => {
+	http.put("/api/cards/{cardId}", async ({ params, request }) => {
 		const { cardId } = params
 		const card = cards.find((card) => card.id === cardId)
 
@@ -137,7 +137,7 @@ export const cardHandlers = [
 		return HttpResponse.json(card)
 	}),
 
-	http.delete("/cards/{cardId}", async ({ params }) => {
+	http.delete("/api/cards/{cardId}", async ({ params }) => {
 		const { cardId } = params
 		const index = cards.findIndex((card) => card.id === cardId)
 

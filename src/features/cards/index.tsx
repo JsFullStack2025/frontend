@@ -14,11 +14,11 @@ export function CardsList() {
 	const [newCardName, setNewCardName] = useState("")
 	const queryClient = useQueryClient()
 
-	const { data, isLoading } = rqClient.useQuery("get", "/cards")
+	const { data, isLoading } = rqClient.useQuery("get", "/api/cards")
 
-	const createCardMutation = rqClient.useMutation("post", "/cards", {
+	const createCardMutation = rqClient.useMutation("post", "/api/cards", {
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["get", "/cards"] })
+			queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
 			toast.success("Карточка создана")
 			setNewCardName("")
 		},
@@ -27,15 +27,19 @@ export function CardsList() {
 		}
 	})
 
-	const deleteCardMutation = rqClient.useMutation("delete", "/cards/{cardId}", {
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["get", "/cards"] })
-			toast.success("Карточка удалена")
-		},
-		onError: () => {
-			toast.error("Не удалось удалить карточку")
+	const deleteCardMutation = rqClient.useMutation(
+		"delete",
+		"/api/cards/{cardId}",
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
+				toast.success("Карточка удалена")
+			},
+			onError: () => {
+				toast.error("Не удалось удалить карточку")
+			}
 		}
-	})
+	)
 
 	const handleCreateCard = () => {
 		if (!newCardName.trim()) {
@@ -82,7 +86,10 @@ export function CardsList() {
 
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{data?.list?.map((card) => (
-					<Card key={card.id} className="p-4">
+					<Card
+						key={card.id}
+						className="p-4"
+					>
 						<div className="flex items-start justify-between">
 							<h3 className="text-lg font-medium">{card.name}</h3>
 							<Button

@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/auth/login": {
+    "/api/auth/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -45,7 +45,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/register": {
+    "/api/auth/register": {
         parameters: {
             query?: never;
             header?: never;
@@ -86,7 +86,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/refresh": {
+    "/api/auth/refresh": {
         parameters: {
             query?: never;
             header?: never;
@@ -125,7 +125,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cards": {
+    "/api/cards": {
         parameters: {
             query?: never;
             header?: never;
@@ -168,11 +168,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["RenameCard"];
-                };
-            };
+            requestBody?: never;
             responses: {
                 /** @description Карточка успешно создана */
                 201: {
@@ -192,7 +188,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cards/{cardId}": {
+    "/api/cards/{cardId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -290,6 +286,7 @@ export interface components {
             email: string;
             /** Format: password */
             password: string;
+            captcha: string;
         };
         User: {
             id: string;
@@ -309,6 +306,7 @@ export interface components {
             email: string;
             /** Format: password */
             password: string;
+            captcha: string;
         };
         Card: {
             id: string;

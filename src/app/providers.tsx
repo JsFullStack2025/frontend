@@ -5,6 +5,7 @@ import { useEffect } from "react"
 
 import { enableMocking } from "@/shared/api/mocks"
 import { queryClient } from "@/shared/api/query-client"
+import { Toaster } from "@/shared/ui/sonner"
 
 function MockProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
@@ -19,7 +20,10 @@ function MockProvider({ children }: { children: React.ReactNode }) {
 export function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<MockProvider>{children}</MockProvider>
+			<MockProvider>
+				{children}
+				<Toaster />
+			</MockProvider>
 		</QueryClientProvider>
 	)
 }

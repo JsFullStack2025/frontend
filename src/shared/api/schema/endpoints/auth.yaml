@@ -16,6 +16,7 @@ schemas:
     required:
       - email
       - password
+      - captcha
     properties:
       email:
         type: string
@@ -23,12 +24,15 @@ schemas:
       password:
         type: string
         format: password
+      captcha:
+        type: string
 
   RegisterRequest:
     type: object
     required:
       - email
       - password
+      - captcha
     properties:
       email:
         type: string
@@ -36,6 +40,8 @@ schemas:
       password:
         type: string
         format: password
+      captcha:
+        type: string
 
   AuthResponse:
     type: object
