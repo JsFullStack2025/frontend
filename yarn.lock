@@ -1500,6 +1500,11 @@ cookie@^0.7.2:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.7.2.tgz#556369c472a2ba910f2979891b526b3436237ed7"
   integrity sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==
 
+create-gstore@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/create-gstore/-/create-gstore-0.2.0.tgz#c9554471b67cb133e5e2f17539ba41f469dc969b"
+  integrity sha512-uBBf/EMrZUBPaILlvsWHhBUPOaZwaxnj4+1JGY9o7zSakI8dS4bBFetBjm9OG8BcPJVNSiCUz28D+WNzpPuwdw==
+
 cross-spawn@^7.0.6:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.6.tgz#8a58fe78f00dcd70c370451759dfbfaf03e8ee9f"

@@ -98,7 +98,7 @@ export const authHandlers = [
 		)
 	}),
 	http.post("/auth/refresh", async ({ cookies }) => {
-		const refreshToken = cookies.refreshToken
+		const refreshToken = cookies.session
 
 		if (!refreshToken) {
 			return HttpResponse.json(

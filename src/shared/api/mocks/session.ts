@@ -6,12 +6,12 @@ type Session = {
 	email: string
 }
 
-const JWT_SECRET = new TextEncoder().encode("your-secret-key")
+const JWT_SECRET = new TextEncoder().encode("session-secret-key")
 const ACCESS_TOKEN_EXPIRY = "3s"
 const REFRESH_TOKEN_EXPIRY = "7d"
 
 export function createRefreshTokenCookie(refreshToken: string) {
-	return `refreshToken=${refreshToken}; Max-Age=604800`
+	return `session=${refreshToken}; Max-Age=604800`
 }
 
 export async function generateTokens(session: Session) {

@@ -2,6 +2,7 @@ import { HttpResponse } from "msw"
 
 import { ApiSchemas } from "../../schema"
 import { http } from "../http"
+import { verifyTokenOrThrow } from "../session"
 
 // Функция для генерации случайного названия карточки
 function generateCardName() {
@@ -56,7 +57,9 @@ function generateRandomCards(count: number): ApiSchemas["Card"][] {
 const cards: ApiSchemas["Card"][] = generateRandomCards(10)
 
 export const cardHandlers = [
-	http.get("/api/cards", async (ctx) => {
+	http.get("/cards", async (ctx) => {
+		await verifyTokenOrThrow(ctx.request)
+
 		const url = new URL(ctx.request.url)
 		const page = Number(url.searchParams.get("page") || 1)
 		const limit = Number(url.searchParams.get("limit") || 10)
@@ -95,7 +98,9 @@ export const cardHandlers = [
 		})
 	}),
 
-	http.get("/api/cards/{cardId}", async ({ params }) => {
+	http.get("/cards/{cardId}", async ({ params, request }) => {
+		await verifyTokenOrThrow(request)
+
 		const { cardId } = params
 		const card = cards.find((card) => card.id === cardId)
 
@@ -109,7 +114,9 @@ export const cardHandlers = [
 		return HttpResponse.json(card)
 	}),
 
-	http.post("/api/cards", async ({ request }) => {
+	http.post("/cards", async ({ request }) => {
+		await verifyTokenOrThrow(request)
+
 		const data = (await request.json()) as ApiSchemas["RenameCard"]
 		const card: ApiSchemas["Card"] = {
 			id: crypto.randomUUID(),
@@ -120,7 +127,9 @@ export const cardHandlers = [
 		return HttpResponse.json(card, { status: 201 })
 	}),
 
-	http.put("/api/cards/{cardId}", async ({ params, request }) => {
+	http.put("/cards/{cardId}", async ({ params, request }) => {
+		await verifyTokenOrThrow(request)
+
 		const { cardId } = params
 		const card = cards.find((card) => card.id === cardId)
 
@@ -137,7 +146,9 @@ export const cardHandlers = [
 		return HttpResponse.json(card)
 	}),
 
-	http.delete("/api/cards/{cardId}", async ({ params }) => {
+	http.delete("/cards/{cardId}", async ({ params, request }) => {
+		await verifyTokenOrThrow(request)
+
 		const { cardId } = params
 		const index = cards.findIndex((card) => card.id === cardId)
 

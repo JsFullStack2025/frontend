@@ -1,12 +1,16 @@
 import { useRouter } from "next/navigation"
 
-import { rqClient } from "@/shared/api/instance"
+import { publicRqClient } from "@/shared/api/instance"
 import { ApiSchemas } from "@/shared/api/schema"
+import { useSession } from "@/shared/model/session"
 
 export function useLogin() {
 	const router = useRouter()
-	const mutation = rqClient.useMutation("post", "/auth/login", {
-		onSuccess: () => {
+	const session = useSession()
+
+	const mutation = publicRqClient.useMutation("post", "/auth/login", {
+		onSuccess: (data) => {
+			session.login(data.accessToken)
 			router.push("/dashboard")
 		}
 	})

@@ -5,7 +5,7 @@ import { Plus, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { rqClient } from "@/shared/api/instance"
+import { authorizedRqClient } from "@/shared/api/instance"
 import { Button } from "@/shared/ui/button"
 import { Card } from "@/shared/ui/card"
 import { Input } from "@/shared/ui/input"
@@ -14,9 +14,9 @@ export function CardsList() {
 	const [newCardName, setNewCardName] = useState("")
 	const queryClient = useQueryClient()
 
-	const { data, isLoading } = rqClient.useQuery("get", "/cards")
+	const { data, isLoading } = authorizedRqClient.useQuery("get", "/cards")
 
-	const createCardMutation = rqClient.useMutation("post", "/cards", {
+	const createCardMutation = authorizedRqClient.useMutation("post", "/cards", {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["get", "/cards"] })
 			toast.success("Карточка создана")
@@ -27,15 +27,19 @@ export function CardsList() {
 		}
 	})
 
-	const deleteCardMutation = rqClient.useMutation("delete", "/cards/{cardId}", {
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
-			toast.success("Карточка удалена")
-		},
-		onError: () => {
-			toast.error("Не удалось удалить карточку")
+	const deleteCardMutation = authorizedRqClient.useMutation(
+		"delete",
+		"/cards/{cardId}",
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
+				toast.success("Карточка удалена")
+			},
+			onError: () => {
+				toast.error("Не удалось удалить карточку")
+			}
 		}
-	})
+	)
 
 	const handleCreateCard = () => {
 		if (!newCardName.trim()) {
