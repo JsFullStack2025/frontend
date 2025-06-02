@@ -19,7 +19,7 @@ const userPasswords = new Map<string, string>()
 userPasswords.set("admin@gmail.com", "123456")
 
 export const authHandlers = [
-	http.post("/api/auth/login", async ({ request }) => {
+	http.post("/auth/login", async ({ request }) => {
 		const body = await request.json()
 
 		const user = mockUsers.find((u) => u.email === body.email)
@@ -56,7 +56,7 @@ export const authHandlers = [
 		)
 	}),
 
-	http.post("/api/auth/register", async ({ request }) => {
+	http.post("/auth/register", async ({ request }) => {
 		const body = await request.json()
 
 		await delay()
@@ -97,7 +97,7 @@ export const authHandlers = [
 			}
 		)
 	}),
-	http.post("/api/auth/refresh", async ({ cookies }) => {
+	http.post("/auth/refresh", async ({ cookies }) => {
 		const refreshToken = cookies.refreshToken
 
 		if (!refreshToken) {

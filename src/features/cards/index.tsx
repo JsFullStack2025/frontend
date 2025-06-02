@@ -14,11 +14,11 @@ export function CardsList() {
 	const [newCardName, setNewCardName] = useState("")
 	const queryClient = useQueryClient()
 
-	const { data, isLoading } = rqClient.useQuery("get", "/api/cards")
+	const { data, isLoading } = rqClient.useQuery("get", "/cards")
 
-	const createCardMutation = rqClient.useMutation("post", "/api/cards", {
+	const createCardMutation = rqClient.useMutation("post", "/cards", {
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
+			queryClient.invalidateQueries({ queryKey: ["get", "/cards"] })
 			toast.success("Карточка создана")
 			setNewCardName("")
 		},
@@ -27,19 +27,15 @@ export function CardsList() {
 		}
 	})
 
-	const deleteCardMutation = rqClient.useMutation(
-		"delete",
-		"/api/cards/{cardId}",
-		{
-			onSuccess: () => {
-				queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
-				toast.success("Карточка удалена")
-			},
-			onError: () => {
-				toast.error("Не удалось удалить карточку")
-			}
+	const deleteCardMutation = rqClient.useMutation("delete", "/cards/{cardId}", {
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["get", "/api/cards"] })
+			toast.success("Карточка удалена")
+		},
+		onError: () => {
+			toast.error("Не удалось удалить карточку")
 		}
-	)
+	})
 
 	const handleCreateCard = () => {
 		if (!newCardName.trim()) {

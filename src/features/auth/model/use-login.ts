@@ -5,7 +5,7 @@ import { ApiSchemas } from "@/shared/api/schema"
 
 export function useLogin() {
 	const router = useRouter()
-	const mutation = rqClient.useMutation("post", "/api/auth/login", {
+	const mutation = rqClient.useMutation("post", "/auth/login", {
 		onSuccess: () => {
 			router.push("/dashboard")
 		}

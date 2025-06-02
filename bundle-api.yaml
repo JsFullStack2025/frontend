@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: Visiteo API
+  description: API for the Visiteo application
+  version: 1.0.0
+tags:
+  - name: auth
+    description: Аутентификация и авторизация
+  - name: cards
+    description: Управление карточками
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /api/auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+  /api/auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: Refresh access token
+      parameters:
+        - in: cookie
+          name: session
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Access token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /api/cards:
+    get:
+      tags:
+        - cards
+      summary: Получить все карточки
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - createdAt
+              - updatedAt
+              - name
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список карточек
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardsList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - cards
+      summary: Создать новую карточку
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Карточка успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /api/cards/{cardId}:
+    get:
+      tags:
+        - cards
+      summary: Получить карточку по id
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Карточка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+    put:
+      tags:
+        - cards
+      summary: Переименовать карточку
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameCard'
+      responses:
+        '200':
+          description: Карточка успешно переименована
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - cards
+      summary: Удалить карточку
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Карточка успешно удалена
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+        - captcha
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        captcha:
+          type: string
+    User:
+      type: object
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+    AuthResponse:
+      type: object
+      required:
+        - accessToken
+        - user
+      properties:
+        accessToken:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - captcha
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        captcha:
+          type: string
+    Card:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    CardsList:
+      type: object
+      required:
+        - list
+        - total
+        - totalPages
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        total:
+          type: integer
+        totalPages:
+          type: integer
+    RenameCard:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

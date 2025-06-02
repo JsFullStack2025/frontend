@@ -8,7 +8,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"api": "npx openapi-typescript ./src/shared/api/schema/main.yaml -o ./src/shared/api/schema/generated.ts"
+		"api": "npx openapi-typescript ./src/shared/api/schema/main.yaml -o ./src/shared/api/schema/generated.ts",
+		"api:bundle": "npx @redocly/cli@latest bundle ./src/shared/api/schema/main.yaml --output bundle-api.yaml"
 	},
 	"dependencies": {
 		"@dnd-kit/core": "^6.3.1",
@@ -24,6 +25,7 @@
 		"clsx": "^2.1.1",
 		"cuid": "^3.0.0",
 		"jose": "^6.0.11",
+		"jwt-decode": "^4.0.0",
 		"lucide-react": "^0.510.0",
 		"next": "15.3.2",
 		"next-themes": "^0.4.6",
