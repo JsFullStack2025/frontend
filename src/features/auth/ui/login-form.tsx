@@ -19,7 +19,7 @@ import {
 } from "@/shared/ui/form"
 import { Input } from "@/shared/ui/input"
 
-import { useLogin } from "../hooks/use-login"
+import { useLogin } from "../model/use-login"
 import { LoginSchema, loginSchema } from "../schemas/login.schema"
 
 export function LoginForm() {

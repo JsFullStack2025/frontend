@@ -1,5 +1,5 @@
 import { FormWrapper } from "./ui/form-wrapper"
-import { RegisterForm } from "./vm/register-form"
+import { RegisterForm } from "./ui/register-form"
 
 export function RegisterPage() {
 	return (

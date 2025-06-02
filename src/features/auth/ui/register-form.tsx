@@ -18,7 +18,7 @@ import {
 } from "@/shared/ui/form"
 import { Input } from "@/shared/ui/input"
 
-import { useRegister } from "../hooks/use-register"
+import { useRegister } from "../model/use-register"
 import { RegisterSchema, registerSchema } from "../schemas/register.schema"
 
 export function RegisterForm() {

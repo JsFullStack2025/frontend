@@ -1,5 +1,5 @@
 import { FormWrapper } from "./ui/form-wrapper"
-import { LoginForm } from "./vm/login-form"
+import { LoginForm } from "./ui/login-form"
 
 export function LoginPage() {
 	return (
